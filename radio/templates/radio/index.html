@@ -1,0 +1,89 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta charset="utf-8">
+  <meta name="theme-color" content="#070b16">
+  <title>Retro Radio</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <canvas id="dotCanvas" aria-hidden="true"></canvas>
+
+  <main class="radio-shell">
+    <header class="top-bar">
+      <div class="brand">RETRO <span>RADIO</span></div>
+      <div class="live-dot" title="Radio status"></div>
+    </header>
+
+    <section class="hero">
+      <div class="time" id="time">
+    <span class="clock-part" id="hourDigits"></span>
+    <span class="clock-colon">:</span>
+    <span class="clock-part" id="minuteDigits"></span>
+    <span class="clock-colon">:</span>
+    <span class="seconds-part" id="secondsDigits"></span>
+    <span class="ampm" id="ampm">PM</span>
+</div>
+      <div class="date" id="date">Mon, 10 Aug 2026</div>
+      <p class="motto">just music · no noise</p>
+    </section>
+
+    <section class="player" aria-label="Radio player">
+      <div class="record-wrap" id="recordWrap">
+        <div class="record">
+          <div class="record-highlight"></div>
+          <div class="record-label"><span></span></div>
+        </div>
+      </div>
+
+      <div class="song-details">
+        <div class="song-title" id="songTitle">Waiting for a song...</div>
+        <div class="song-meta">
+          <span id="songArtist">Add MP3 files to the playlist</span>
+          <span class="separator">·</span>
+          <span id="songYear"></span>
+        </div>
+        <div class="progress-line"><span></span></div>
+      </div>
+    </section>
+
+    <section class="controls" aria-label="Playback controls">
+      <button id="startButton" class="start-button">▶ START RADIO</button>
+      <button id="muteButton" class="icon-button" disabled aria-label="Mute">🔊</button>
+      <input id="volume" type="range" min="0" max="1" value="0.72" step="0.01" aria-label="Volume">
+      <div class="status" id="status">READY</div>
+    </section>
+
+    <footer>
+      <span id="hourIndicator">00:00</span>
+      <span>24 / 7 RADIO</span>
+    </footer>
+  </main>
+
+  <audio id="audio" preload="auto"></audio>
+  <script src="{% static 'js/app.js' %}"></script>
+
+<div class="rotate-message">
+    <div class="rotate-icon">↻</div>
+    <div>ROTATE YOUR PHONE</div>
+    <span>Best experienced in landscape</span>
+</div>
+
+<footer>
+    <span id="hourIndicator">00:00</span>
+    <span>24 / 7 RADIO</span>
+
+    <a
+        class="creator-credit"
+        href="https://www.linkedin.com/in/aryandhone555/"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        Created by Aryan
+    </a>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,623 @@
+:root {
+  --bg-a: #07151a;
+  --bg-b: #060b16;
+  --bg-c: #10152b;
+  --accent: #67e88b;
+  --accent-soft: rgba(103, 232, 139, .45);
+  --text: #f4f7f5;
+  --muted: rgba(244, 247, 245, .55);
+  --dim: rgba(244, 247, 245, .30);
+}
+
+* { box-sizing: border-box; }
+
+/* html, body {
+  margin: 0;
+  min-height: 100%;
+} */
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    overflow: hidden;
+}
+
+body {
+  min-height: 100vh;
+  overflow: hidden;
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 38%),
+    linear-gradient(135deg, var(--bg-a), var(--bg-b) 55%, var(--bg-c));
+  transition: background 2.5s ease, --accent 2.5s ease;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle at center, transparent 20%, rgba(0,0,0,.20) 100%);
+}
+
+#dotCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* .radio-shell {
+  width: min(1120px, calc(100% - 44px));
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 28px 0 22px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+} */
+
+.radio-shell {
+    width: min(1120px, calc(100% - 44px));
+    height: 100vh;
+    min-height: 100dvh;
+    margin: 0 auto;
+    padding: 28px 0 18px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    overflow: hidden;
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-size: 14px;
+  letter-spacing: 5px;
+  font-weight: 600;
+  opacity: .85;
+}
+
+.brand span {
+  color: var(--accent);
+  transition: color 2.5s ease;
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 16px var(--accent);
+  transition: background 2.5s ease, box-shadow 2.5s ease;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% { opacity: .35; transform: scale(.7); }
+}
+
+/* .hero {
+  text-align: center;
+  margin: clamp(80px, 13vh, 150px) 0 40px;
+} */
+
+.hero {
+    text-align: center;
+    margin: clamp(35px, 8vh, 90px) 0 25px;
+}
+
+.time {
+  font-size: clamp(68px, 11vw, 142px);
+  font-weight: 300;
+  line-height: .9;
+  letter-spacing: -6px;
+  text-shadow: 0 0 40px rgba(255,255,255,.05);
+}
+
+/* =========================
+   ROLLING CLOCK DIGITS
+   ========================= */
+
+.time {
+    display: inline-flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0;
+}
+
+.clock-part,
+.seconds-part {
+    display: inline-flex;
+    height: 1em;
+    overflow: hidden;
+    vertical-align: bottom;
+    font-size: 1em;
+    line-height: 1;
+}
+
+.clock-colon {
+    display: inline-block;
+    min-width: .28em;
+    text-align: center;
+    font-size: 1em;
+}
+
+.digit-window {
+    display: inline-block;
+    height: 1em;
+    line-height: 1em;
+    overflow: hidden;
+    position: relative;
+}
+
+.digit-reel {
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+}
+
+.digit {
+    display: block;
+    height: 1em;
+    line-height: 1em;
+    min-width: .58em;
+    text-align: center;
+}
+
+.ampm {
+    font-size: .25em !important;
+    letter-spacing: 1px;
+    margin-left: 10px;
+    color: var(--accent);
+    transition: color 2.5s ease;
+}
+
+.date {
+  margin-top: 22px;
+  font-size: 17px;
+  color: var(--muted);
+  letter-spacing: 1.5px;
+}
+
+.motto {
+  margin: 14px 0 0;
+  font-size: 11px;
+  color: var(--dim);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.player {
+  width: min(760px, 100%);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 38px;
+  padding: 18px 0;
+}
+
+.record-wrap {
+  flex: 0 0 190px;
+  height: 190px;
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 20px 35px rgba(0,0,0,.45));
+}
+
+.record {
+  width: 184px;
+  height: 184px;
+  border-radius: 50%;
+  position: relative;
+  display: grid;
+  place-items: center;
+  background:
+    repeating-radial-gradient(circle, #050505 0 5px, #111 6px 7px, #030303 8px 11px);
+  border: 5px solid #151515;
+  box-shadow:
+    inset 0 0 0 2px #000,
+    inset 0 0 25px rgba(255,255,255,.035);
+}
+
+.record::before {
+  content: "";
+  position: absolute;
+  inset: 22px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.record-highlight {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(125deg, transparent 0 35%, rgba(255,255,255,.08) 45%, transparent 55%);
+}
+
+.record-label {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  transition: background 2.5s ease;
+  box-shadow: 0 0 22px var(--accent-soft);
+}
+
+.record-label span {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #070707;
+}
+
+.record.playing {
+  animation: spin 3.2s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.song-details {
+  min-width: 0;
+  flex: 1;
+}
+
+.song-title {
+  font-size: clamp(25px, 3vw, 38px);
+  font-weight: 450;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-meta {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.separator {
+  margin: 0 7px;
+  color: var(--accent);
+  transition: color 2.5s ease;
+}
+
+.progress-line {
+  height: 1px;
+  margin-top: 25px;
+  width: min(330px, 100%);
+  background: rgba(255,255,255,.12);
+  overflow: hidden;
+}
+
+.progress-line span {
+  display: block;
+  width: 28%;
+  height: 100%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+  transition: background 2.5s ease;
+}
+
+.controls {
+  margin: 22px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  flex-wrap: wrap;
+}
+
+button {
+  font: inherit;
+}
+
+.start-button,
+.icon-button {
+  border: 0;
+  color: var(--text);
+  background: transparent;
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+.start-button {
+  padding: 8px 3px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  transition: color 2.5s ease, transform .2s ease;
+}
+
+.icon-button {
+  width: 34px;
+  height: 34px;
+  opacity: .65;
+}
+
+.start-button:hover:not(:disabled),
+.icon-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  opacity: 1;
+}
+
+button:disabled {
+  opacity: .25;
+  cursor: not-allowed;
+}
+
+#volume {
+  width: 95px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.status {
+  width: 100%;
+  text-align: center;
+  margin-top: 3px;
+  color: var(--dim);
+  font-size: 9px;
+  letter-spacing: 2.5px;
+}
+/* 
+footer {
+  margin-top: auto;
+  padding-top: 28px;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  color: rgba(255,255,255,.25);
+  font-size: 9px;
+  letter-spacing: 2.5px;
+} */
+
+footer {
+    margin-top: auto;
+    padding-top: 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+
+    position: relative;
+
+    color: rgba(255,255,255,.25);
+    font-size: 9px;
+    letter-spacing: 2.5px;
+}
+
+.creator-credit {
+    position: fixed;
+    right: 22px;
+    bottom: 16px;
+
+    color: rgba(255,255,255,.35);
+    text-decoration: none;
+
+    font-size: 9px;
+    letter-spacing: 1.5px;
+
+    transition:
+        color .3s ease,
+        opacity .3s ease;
+}
+
+.creator-credit:hover {
+    color: var(--accent);
+}
+
+@media (max-width: 700px) {
+  .radio-shell { width: min(100% - 28px, 600px); }
+  .hero { margin-top: 75px; }
+  .time { letter-spacing: -4px; }
+  .player { gap: 24px; }
+  .record-wrap, .record { width: 145px; height: 145px; flex-basis: 145px; }
+  .record-label { width: 42px; height: 42px; }
+}
+
+@media (max-width: 500px) {
+  body { overflow-y: auto; }
+  .radio-shell { min-height: 100svh; padding-top: 20px; }
+  .hero { margin-top: 65px; }
+  .time { font-size: 61px; letter-spacing: -3px; }
+  .player { flex-direction: column; text-align: center; gap: 25px; }
+  .record-wrap, .record { width: 150px; height: 150px; flex-basis: 150px; }
+  .song-title { white-space: normal; }
+  .song-meta { font-size: 14px; }
+  .progress-line { margin: 20px auto 0; }
+}
+
+@media (max-height: 700px) and (orientation: landscape) {
+
+    .radio-shell {
+        padding-top: 18px;
+        padding-bottom: 10px;
+    }
+
+    .hero {
+        margin-top: 25px;
+        margin-bottom: 15px;
+    }
+
+    .time {
+        font-size: clamp(55px, 9vw, 105px);
+    }
+
+    .date {
+        margin-top: 12px;
+        font-size: 14px;
+    }
+
+    .motto {
+        margin-top: 8px;
+    }
+
+    .player {
+        gap: 25px;
+        padding: 10px 0;
+    }
+
+    .record-wrap,
+    .record {
+        width: 145px;
+        height: 145px;
+        flex-basis: 145px;
+    }
+
+    .controls {
+        margin-top: 12px;
+    }
+
+    footer {
+        padding-top: 8px;
+    }
+
+    .creator-credit {
+        bottom: 10px;
+        right: 12px;
+    }
+}
+
+/* Mechanical rolling seconds: each second digit drops into place slowly,
+   like an old speedometer/odometer rather than snapping to the next number. */
+.time {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0;
+}
+
+.clock-part,
+.seconds-part {
+  display: inline-flex;
+  height: 1em;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.digit-window {
+  display: inline-block;
+  height: 1em;
+  line-height: 1em;
+  overflow: hidden;
+  position: relative;
+}
+
+.digit-reel {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+  transition: transform 820ms cubic-bezier(.18,.72,.18,1);
+}
+
+.digit {
+  display: block;
+  height: 1em;
+  line-height: 1em;
+  min-width: .58em;
+  text-align: center;
+}
+
+.clock-colon {
+  display: inline-block;
+  min-width: .28em;
+  text-align: center;
+}
+
+.ampm {
+  font-size: .25em;
+  letter-spacing: 1px;
+  margin-left: 10px;
+  color: var(--accent);
+  transition: color 2.5s ease;
+}
+
+.rotate-message {
+    display: none;
+}
+
+@media screen and (orientation: portrait) and (max-width: 700px) {
+
+    .rotate-message {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+
+        background:
+            radial-gradient(
+                circle at center,
+                color-mix(in srgb, var(--accent) 8%, transparent),
+                transparent 45%
+            ),
+            #060b16;
+
+        color: var(--text);
+    }
+
+    .rotate-icon {
+        font-size: 55px;
+        margin-bottom: 18px;
+
+        color: var(--accent);
+
+        animation: rotatePhone 2s ease-in-out infinite;
+    }
+
+    .rotate-message > div:not(.rotate-icon) {
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 3px;
+    }
+
+    .rotate-message span {
+        margin-top: 10px;
+
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: 1.5px;
+    }
+
+    .radio-shell {
+        display: none;
+    }
+
+    @keyframes rotatePhone {
+        0%, 100% {
+            transform: rotate(0deg);
+        }
+
+        50% {
+            transform: rotate(90deg);
+        }
+    }
+}

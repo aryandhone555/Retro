@@ -2,6 +2,8 @@
 
 A tiny recreational 24/7 web radio built with Django, plain JavaScript and real local MP3 files.
 
+Live: [text](https://retro-rj73.onrender.com/)
+
 ## Features
 
 - No login and no database required for the playlist.

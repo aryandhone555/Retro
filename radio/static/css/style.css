@@ -652,3 +652,148 @@ footer {
         }
     }
 }
+
+/* 
+mobile scrolling issue fixed */
+/* =========================================================
+   MOBILE LANDSCAPE - FIT EVERYTHING WITHOUT SCROLLING
+   ========================================================= */
+
+@media screen and (max-width: 700px) and (orientation: landscape) {
+
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        min-height: 100%;
+        overflow: hidden;
+    }
+
+    .radio-shell {
+        width: calc(100% - 28px);
+        height: 100dvh;
+        min-height: 100dvh;
+
+        padding: 12px 0 8px;
+        box-sizing: border-box;
+    }
+
+    .top-bar {
+        height: 20px;
+    }
+
+    .brand {
+        font-size: 10px;
+        letter-spacing: 3px;
+    }
+
+    .live-dot {
+        width: 5px;
+        height: 5px;
+    }
+
+    /* Clock */
+    .hero {
+        margin: 22px 0 12px;
+    }
+
+    .time {
+        font-size: clamp(48px, 11vw, 78px);
+        letter-spacing: -4px;
+    }
+
+    .time span,
+    .ampm {
+        font-size: .22em;
+        margin-left: 6px;
+    }
+
+    .date {
+        margin-top: 8px;
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+
+    .motto {
+        margin-top: 5px;
+        font-size: 8px;
+        letter-spacing: 2.5px;
+    }
+
+    /* Player */
+    .player {
+        width: min(650px, 100%);
+        gap: 20px;
+        padding: 5px 0;
+    }
+
+    .record-wrap,
+    .record {
+        width: 115px;
+        height: 115px;
+        flex-basis: 115px;
+    }
+
+    .record-label {
+        width: 34px;
+        height: 34px;
+    }
+
+    .record-label span {
+        width: 8px;
+        height: 8px;
+    }
+
+    .song-title {
+        font-size: clamp(20px, 3.5vw, 28px);
+    }
+
+    .song-meta {
+        margin-top: 6px;
+        font-size: 12px;
+    }
+
+    .progress-line {
+        margin-top: 12px;
+        width: min(280px, 100%);
+    }
+
+    /* Controls */
+    .controls {
+        margin: 8px auto 0;
+        gap: 8px;
+    }
+
+    .start-button {
+        font-size: 10px;
+        letter-spacing: 1.4px;
+        padding: 5px 2px;
+    }
+
+    .icon-button {
+        width: 28px;
+        height: 28px;
+    }
+
+    #volume {
+        width: 70px;
+    }
+
+    .status {
+        margin-top: 0;
+        font-size: 7px;
+        letter-spacing: 2px;
+    }
+
+    /* Footer */
+    footer {
+        padding-top: 5px;
+        font-size: 7px;
+    }
+
+    .creator-credit {
+        right: 10px;
+        bottom: 7px;
+        font-size: 7px;
+    }
+}

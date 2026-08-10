@@ -11,6 +11,7 @@ const timeEl = document.getElementById('time');
 const ampmEl = document.getElementById('ampm');
 const dateEl = document.getElementById('date');
 const hourIndicator = document.getElementById('hourIndicator');
+const songProgress = document.getElementById('songProgress');
 
 let playlist = [];
 let currentIndex = -1;
@@ -260,6 +261,7 @@ async function playTrack(index) {
   const track = playlist[currentIndex];
   showTrack(track);
   audio.src = track.file;
+  songProgress.style.width = '0%';
   audio.currentTime = 0;
 
   try {
@@ -277,11 +279,32 @@ async function playTrack(index) {
   }
 }
 
-audio.addEventListener('ended', () => playTrack(currentIndex + 1));
+// audio.addEventListener('ended', () => playTrack(currentIndex + 1));
+
+audio.addEventListener('ended', () => {
+    console.log('SONG ENDED');
+    console.log('Current index:', currentIndex);
+    console.log('Playlist length:', playlist.length);
+    console.log('Next track:', currentIndex + 1, playlist[currentIndex + 1]);
+
+    playTrack(currentIndex + 1);
+});
 
 audio.addEventListener('error', () => {
   status.textContent = 'TRACK ERROR · SKIPPING';
   setTimeout(() => playTrack(currentIndex + 1), 700);
+});
+
+audio.addEventListener('timeupdate', () => {
+    if (!audio.duration || !isFinite(audio.duration)) {
+        songProgress.style.width = '0%';
+        return;
+    }
+
+    const percentage =
+        (audio.currentTime / audio.duration) * 100;
+
+    songProgress.style.width = `${percentage}%`;
 });
 
 startButton.addEventListener('click', async () => {

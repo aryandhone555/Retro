@@ -12,10 +12,14 @@ const ampmEl = document.getElementById('ampm');
 const dateEl = document.getElementById('date');
 const hourIndicator = document.getElementById('hourIndicator');
 const songProgress = document.getElementById('songProgress');
+const prevButton = document.getElementById('prevButton');
+const nextButton = document.getElementById('nextButton');
 
 let playlist = [];
 let currentIndex = -1;
 let started = false;
+
+
 
 const themes = [
     { accent: '#67e88b' }, // Green
@@ -411,3 +415,17 @@ function drawDots(time) {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 requestAnimationFrame(drawDots);
+
+
+// prev next button
+prevButton.addEventListener('click', () => {
+    if (!playlist.length) return;
+
+    playTrack(currentIndex - 1);
+});
+
+nextButton.addEventListener('click', () => {
+    if (!playlist.length) return;
+
+    playTrack(currentIndex + 1);
+});
